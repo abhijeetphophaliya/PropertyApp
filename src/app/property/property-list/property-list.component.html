@@ -1,3 +1,54 @@
-<p>
-  property-list works!
-</p>
+<div class="row">
+  <strong class="col-md-1">Filter City: &nbsp; </strong>
+  <div class="col-2">
+    <input [(ngModel)]="City" class="form-control" />
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary col-md-1"
+    (click)="onCityFilter()"
+  >
+    Search
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-primary col-md-1 mx-1"
+    (click)="onCityFilterClear()"
+  >
+    Clear
+  </button>
+
+
+  <strong class="col-md-1">Sort by &nbsp;</strong>
+  <div class="col-2">
+  <select class="form-control" [(ngModel)]="SortbyParam">
+    <option value="City">City</option>
+    <option value="Price">Price</option>
+  </select>
+</div>
+<div class="col-1">
+<button type="button" class="btn btn-primary" (click)="onSortDirection()">
+  <i *ngIf="SortDirection === 'asc'" class="fas fa-sort-alpha-down"></i>
+  <i *ngIf="SortDirection === 'desc'" class="fas fa-sort-alpha-up"></i>
+</button>
+</div>
+</div>
+
+
+
+
+
+<div class="row">
+  <div
+    *ngFor="
+      let property of properties
+        | filter : SearchCity : 'City'
+        | sort : [SortbyParam, SortDirection]
+    "
+    class="col-sm-4 shadow-lg p-3"
+  >
+    <app-property-card [property]="property"></app-property-card>
+  </div>
+</div>
